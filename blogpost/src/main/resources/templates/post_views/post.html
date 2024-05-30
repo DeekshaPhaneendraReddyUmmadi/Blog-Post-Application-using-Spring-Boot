@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+  <head th:replace="~{/fragments/head :: head}">
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <div class="bg-box">
+      <img th:src="@{/resources/static/images/hero-bg.jpg}" alt="">
+      <!-- <img src="/images/hero-bg.jpg" alt=""> -->
+    </div>
+    <header th:replace="~{/fragments/header :: header}">
+  </div>
+
+  <section class="about_section layout_padding">
+    <div class="container  ">
+      <div class="posts" >
+ 
+
+        <h3><a th:text="${post.title}" style="color: white;">Title</a></h3>
+        <!-- <h5 th:text="'Author: ' + @{post.account.firstname} + ' | Created at: '+ ${post.createdAt}"></h5> -->
+        <!-- <h5 th:text="'Author: ' + ${post.account.firstname} + ' | Created at : ' + ${#temporals.format(post.createdAt , 'dd-MM-yyyy HH:mm')}"></h5> -->
+        <h5 th:text="'Author: ' + ${post.account.firstname} + ' | Created at : ' + ${#temporals.format(post.createdAt , 'dd-MM-yyyy HH:mm')} + ' | Created at : ' + ${#temporals.format(post.updatedAt , 'dd-MM-yyyy HH:mm')}"></h5>
+        <p th:utext="${post.body}">body</p>
+        <!-- <hr color="gray">  -->
+        <div sec:authorize="isAuthenticated()" th:if="${isOwner}">
+          <a th:href="@{'/post/'+${post.id}+ '/edit'}" class="btn btn-secondary btn-lg" tabindex="-1" role="button">Edit</a> |
+            <!-- Button trigger modal -->
+          <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" id="modal-btn" data-bs-target="#exampleModal"> -->
+            <a th:href="@{'/post/'+${post.id}+ '/delete'}" class="btn btn-danger btn-lg" tabindex="-1" role="button">Delete</a>
+            
+          <!-- </button> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="modal-btn" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="delete-btn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <footer th:replace="~{/fragments/footer :: footer}">
+</body>
+
+</html>
